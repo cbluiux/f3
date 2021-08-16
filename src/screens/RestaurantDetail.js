@@ -34,8 +34,10 @@ const RestaurantDetail = ({ navigation }) => {
   }, []);
 
   return (
-    <View>
-      <Text>{details ? details.name : detailError}</Text>
+    <View style={styles.contentContainer}>
+      <Text style={styles.detailHeading}>
+        {details ? details.name : detailError}
+      </Text>
       <Text>{`Yelp Rating: ${details.rating} stars`}</Text>
       <Text>{`${
         !details.is_closed
@@ -48,17 +50,35 @@ const RestaurantDetail = ({ navigation }) => {
           ? formatAddress(details.location.display_address)
           : null}
       </Text>
+
       <FlatList
         data={details.photos}
+        style={styles.flatList}
         keyExtractor={(photo) => photo}
         renderItem={({ item }) => (
           <Image style={styles.image} source={{ uri: item }} />
         )}
+        contentContainerStyle={styles.contentContainer}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({ image: { height: 200, width: 300 } });
+const styles = StyleSheet.create({
+  image: {
+    height: 200,
+    width: 300,
+    borderRadius: 10,
+    marginVertical: 10,
+  },
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailHeading: {
+    marginVertical: 10,
+  },
+});
 
 export default RestaurantDetail;
